@@ -1,0 +1,39 @@
+<wicket:panel>
+	<div>
+		<form wicket:id="newMailForm">
+			<table class="mail_form_table">
+				<tbody>
+					<tr>
+						<td class=label><label wicket:id="receiverLabel">Receiver</label></td>
+						<td class="receiver"><input wicket:id="receiver" /></td>
+					</tr>
+					<tr>
+					<td>
+						<label wicket:id="subjectLabel">Subject</label></td>
+						<td class="subject"><input wicket:id="mailSubject" /></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="text">
+						<textarea name="editor" style="resize:none;" type="text" rows = "40" cols = "120" wicket:id="mailText"></textarea>
+						<!-- 	<script>
+								
+								CKEDITOR.replace('editor');
+							</script> -->
+							<span wicket:id="ckeditor"></span>
+						</td>
+					</tr>
+					<tr>
+						<td>	
+							<span>
+								<button wicket:id="sendMail">
+									Send
+								</button>
+							</span> 
+						</td>
+					</tr>
+					<div wicket:id="feedback">[[feedback ]]</div>
+				</tbody>
+			</table>
+		</form>
+	</div>
+</wicket:panel>

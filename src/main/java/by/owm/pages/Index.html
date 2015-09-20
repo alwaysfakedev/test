@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+<meta charset="UTF-8">
+<title>Mail Client</title>
+
+<link rel="stylesheet" href="mystyle.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="mystyle.css"/>
+
+</head>
+<body>
+
+	<div id="container">
+		
+			<header class="layout">
+				<div id="header">
+				<a wicket:id="signIn"><button class="signIn" type="button">sign in</button></a>
+				<a wicket:id="signOut"><button class="signIn" type="button">sign out</button></a>
+				</div>
+			</header>
+			
+			<div id="menu" wicket:id="menuPanel">
+			</div>
+			
+			<div id="content" class="content wrapper">
+				<wicket:child />
+			</div>
+			
+			<footer class="layout">
+				<div id="footer"></div>
+			</footer>
+	</div>
+</body>
+</html>
