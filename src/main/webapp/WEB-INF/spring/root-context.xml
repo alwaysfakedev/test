@@ -15,10 +15,9 @@
 
     <context:annotation-config />
 
-    <context:component-scan base-package="by.owm.dao" />
     <context:component-scan base-package="by.owm.service" />
 
-    <import resource="data.xml"  />
+    <import resource="mongodbdata.xml"  />
 
 
 </beans>

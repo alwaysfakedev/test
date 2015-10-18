@@ -1,0 +1,19 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+    <context:annotation-config/>
+    <context:property-placeholder location="WEB-INF/db.properties"/>
+    <bean id="mailConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="location" value="WEB-INF/mail.properties"/>
+        <property name="fileEncoding" value="UTF-8"/>
+    </bean>
+    <bean id="mongoClient" class="by.owm.service.db.client.OWMMongoClient">
+        <property name="host" value="${mongo.host}"/>
+        <property name="port" value="${mongo.port}"/>
+        <property name="dbName" value="${mongo.db.name}"/>
+        <property name="userName" value="${mongo.user.name}"/>
+        <property name="password" value="${mongo.password}"/>
+    </bean>
+    <!--  Data service  -->
+    <bean id="dataService" class="by.owm.service.db.impl.DataServiceImpl">
+        <property name="mongoClient" ref="mongoClient"/>
+    </bean>
+</beans>

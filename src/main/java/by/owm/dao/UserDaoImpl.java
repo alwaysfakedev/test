@@ -11,11 +11,16 @@ import by.owm.model.User;
 @Transactional
 public class UserDaoImpl extends GenericDAOImpl<User, Long> implements UserDao
 {
-	    public User getUserByLoginPassword(String login, String password) {
-	        Criteria cr = getSession()
-	                .createCriteria(User.class, "UserController")
-	                .add(Restrictions.eq(User.LOGIN_FIELD, login))
-	                .add(Restrictions.eq(User.PASSWORD_FIELD, password));
-	        return (User) cr.uniqueResult();
-	 }
+	   /* public User getUserByLoginPassword(String login, String password) {
+	Criteria cr = getSession()
+			.createCriteria(User.class, "UserController")
+			.add(Restrictions.eq(User.LOGIN_FIELD, login))
+			.add(Restrictions.eq(User.PASSWORD_FIELD, password));
+	return (User) cr.uniqueResult();
+}*/
+	   public User getUserByLoginPassword(String login, String password) {
+
+		   
+		   return null;
+	   }
 }
