@@ -1,3 +1,4 @@
+/*
 package by.owm.service.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,3 +40,4 @@ public class UserServiceImpl implements UserService {
     }
 
 }
+*/
