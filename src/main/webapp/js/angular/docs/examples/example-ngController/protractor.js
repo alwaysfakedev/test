@@ -1,4 +1,4 @@
-it('should check controller', function() {
+it('should check rest', function() {
   var container = element(by.id('ctrl-exmpl'));
 
   expect(container.element(by.model('name'))

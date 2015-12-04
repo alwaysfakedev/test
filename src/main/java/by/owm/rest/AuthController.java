@@ -1,34 +1,34 @@
-package by.owm.controller;
+package by.owm.rest;
 
-import by.owm.service.db.DataService;
 import com.mongodb.BasicDBObject;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import sun.security.jgss.TokenTracker;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by haria on 17.10.2015.
  */
+
 @Controller
-@Path("/auth")
+@RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
-    private DataService dataService;
+//    @Autowired
+//    private DataService dataService;
 
     //TODO:refactor code
-    @POST
-    @Path("/")
-    public Response login(String jsonData)
+    @RequestMapping(value = "/autenticate", method = RequestMethod.POST)
+    public@ResponseBody String login(@RequestBody String jsonData)
     {
         JSONObject jsonObject = null;
         Response response;
@@ -55,7 +55,7 @@ public class AuthController {
             }
 
             if(login != null && password != null) {
-                result = dataService.logIn(login, password);
+//                result = dataService.logIn(login, password);
             }
             else
             {
@@ -73,7 +73,21 @@ public class AuthController {
         else {
             response = Response.status(Response.Status.NO_CONTENT).build();
         }
-        return response;
+        return "";
+    }
+
+
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> detail(
+                    HttpSession session) {
+
+
+        // I use a map for the example but you should probably use a "real" object
+        // The idea here is that you return a rest resource
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("project", "project");
+        return map;
     }
 
 }

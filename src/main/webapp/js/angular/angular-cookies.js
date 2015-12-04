@@ -76,7 +76,7 @@ angular.module('ngCookies', ['ng']).
      *
      * ```js
      * angular.module('cookiesExample', ['ngCookies'])
-     *   .controller('ExampleController', ['$cookies', function($cookies) {
+     *   .rest('ExampleController', ['$cookies', function($cookies) {
      *     // Retrieving a cookie
      *     var favoriteCookie = $cookies.get('myFavorite');
      *     // Setting a cookie
@@ -201,7 +201,7 @@ angular.module('ngCookies').
  *
  * ```js
  * angular.module('cookieStoreExample', ['ngCookies'])
- *   .controller('ExampleController', ['$cookieStore', function($cookieStore) {
+ *   .rest('ExampleController', ['$cookieStore', function($cookieStore) {
  *     // Put cookie
  *     $cookieStore.put('myFavorite','oatmeal');
  *     // Get cookie

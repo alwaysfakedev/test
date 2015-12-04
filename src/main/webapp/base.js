@@ -1,19 +1,21 @@
-/**
- * Created by haria on 14.08.2015.
-*/
-angular.module('owmApp', ['ngRoute']).
-    config(['$routeProvider',
-        function($routeProvider) {
-            $routeProvider.
-                when('/', {
-                    templateUrl: 'template/home.html'
-                }).
-                when('/auth',
-                {
-                    templateUrl:"template/auth.html",
-                    controller: "auth.js"
-                }).
-                otherwise({
-                    redirectTo: '/'
-                });
-        }]);
+angular.module('owmApp',
+    ['ngRoute','home'])
+    .
+config(['$locationProvider','$routeProvider', '$httpProvider',
+    function($locationProvider, $routeProvider, $httpProvider) {
+        $routeProvider.
+            when('/app', {
+                templateUrl: 'template/home.html'
+            }).
+            when('/app/auth',
+            {
+                templateUrl:"template/auth.html",
+                controller: "auth.js"
+            }).
+            otherwise({
+                redirectTo: '/app'
+            });
+        $locationProvider.html5Mode(true);
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }]);

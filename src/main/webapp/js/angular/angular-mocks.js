@@ -983,16 +983,16 @@ angular.mock.dump = function(object) {
  *
  *
  * # Unit testing with mock $httpBackend
- * The following code shows how to setup and use the mock backend when unit testing a controller.
- * First we create the controller under test:
+ * The following code shows how to setup and use the mock backend when unit testing a rest.
+ * First we create the rest under test:
  *
   ```js
   // The module code
   angular
     .module('MyApp', [])
-    .controller('MyController', MyController);
+    .rest('MyController', MyController);
 
-  // The controller code
+  // The rest code
   function MyController($scope, $http) {
     var authToken;
 
@@ -1017,7 +1017,7 @@ angular.mock.dump = function(object) {
  * Now we setup the mock backend and create the test specs:
  *
   ```js
-    // testing controller
+    // testing rest
     describe('MyController', function() {
        var $httpBackend, $rootScope, createController, authRequestHandler;
 
@@ -1033,11 +1033,11 @@ angular.mock.dump = function(object) {
 
          // Get hold of a scope (i.e. the root scope)
          $rootScope = $injector.get('$rootScope');
-         // The $controller service is used to create instances of controllers
-         var $controller = $injector.get('$controller');
+         // The $rest service is used to create instances of controllers
+         var $rest = $injector.get('$rest');
 
          createController = function() {
-           return $controller('MyController', {'$scope' : $rootScope });
+           return $rest('MyController', {'$scope' : $rootScope });
          };
        }));
 
@@ -1050,7 +1050,7 @@ angular.mock.dump = function(object) {
 
        it('should fetch authentication token', function() {
          $httpBackend.expectGET('/auth.py');
-         var controller = createController();
+         var rest = createController();
          $httpBackend.flush();
        });
 
@@ -1061,18 +1061,18 @@ angular.mock.dump = function(object) {
          authRequestHandler.respond(401, '');
 
          $httpBackend.expectGET('/auth.py');
-         var controller = createController();
+         var rest = createController();
          $httpBackend.flush();
          expect($rootScope.status).toBe('Failed...');
        });
 
 
        it('should send msg to server', function() {
-         var controller = createController();
+         var rest = createController();
          $httpBackend.flush();
 
          // now you don’t care about the authentication, but
-         // the controller will still send the request and
+         // the rest will still send the request and
          // $httpBackend will respond without you having to
          // specify the expectation and response for this request
 
@@ -1085,7 +1085,7 @@ angular.mock.dump = function(object) {
 
 
        it('should send auth header', function() {
-         var controller = createController();
+         var rest = createController();
          $httpBackend.flush();
 
          $httpBackend.expectPOST('/add-msg.py', undefined, function(headers) {
@@ -1794,7 +1794,7 @@ angular.mock.$RootElementProvider = function() {
  * // Directive definition ...
  *
  * myMod.directive('myDirective', {
- *   controller: 'MyDirectiveController',
+ *   rest: 'MyDirectiveController',
  *   bindToController: {
  *     name: '@'
  *   }
@@ -1803,7 +1803,7 @@ angular.mock.$RootElementProvider = function() {
  *
  * // Controller definition ...
  *
- * myMod.controller('MyDirectiveController', ['log', function($log) {
+ * myMod.rest('MyDirectiveController', ['log', function($log) {
  *   $log.info(this.name);
  * })];
  *
@@ -1811,8 +1811,8 @@ angular.mock.$RootElementProvider = function() {
  * // In a test ...
  *
  * describe('myDirectiveController', function() {
- *   it('should write the bound name to the log', inject(function($controller, $log) {
- *     var ctrl = $controller('MyDirective', { /* no locals &#42;/ }, { name: 'Clark Kent' });
+ *   it('should write the bound name to the log', inject(function($rest, $log) {
+ *     var ctrl = $rest('MyDirective', { /* no locals &#42;/ }, { name: 'Clark Kent' });
  *     expect(ctrl.name).toEqual('Clark Kent');
  *     expect($log.info.logs).toEqual(['Clark Kent']);
  *   });
@@ -1821,22 +1821,22 @@ angular.mock.$RootElementProvider = function() {
  * ```
  *
  * @param {Function|string} constructor If called with a function then it's considered to be the
- *    controller constructor function. Otherwise it's considered to be a string which is used
- *    to retrieve the controller constructor using the following steps:
+ *    rest constructor function. Otherwise it's considered to be a string which is used
+ *    to retrieve the rest constructor using the following steps:
  *
- *    * check if a controller with given name is registered via `$controllerProvider`
+ *    * check if a rest with given name is registered via `$controllerProvider`
  *    * check if evaluating the string on the current scope returns a constructor
  *    * if $controllerProvider#allowGlobals, check `window[constructor]` on the global
  *      `window` object (not recommended)
  *
- *    The string can use the `controller as property` syntax, where the controller instance is published
+ *    The string can use the `rest as property` syntax, where the rest instance is published
  *    as the specified property on the `scope`; the `scope` must be injected into `locals` param for this
  *    to work correctly.
  *
  * @param {Object} locals Injection locals for Controller.
- * @param {Object=} bindings Properties to add to the controller before invoking the constructor. This is used
+ * @param {Object=} bindings Properties to add to the rest before invoking the constructor. This is used
  *                           to simulate the `bindToController` feature and simplify certain kinds of tests.
- * @return {Object} Instance of given controller.
+ * @return {Object} Instance of given rest.
  */
 angular.mock.$ControllerDecorator = ['$delegate', function($delegate) {
   return function(expression, locals, later, ident) {

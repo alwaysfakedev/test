@@ -3492,11 +3492,11 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
         .config(['$routeProvider', function($routeProvider) {
           $routeProvider.when('/', {
             templateUrl: 'home.html',
-            controller: 'HomeController as home'
+            rest: 'HomeController as home'
           });
           $routeProvider.when('/profile/:id', {
             templateUrl: 'profile.html',
-            controller: 'ProfileController as profile'
+            rest: 'ProfileController as profile'
           });
         }])
         .run(['$rootScope', function($rootScope) {
@@ -3513,10 +3513,10 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
             { id:10, title: "Alexandrea Sauer" }
           ];
         }])
-        .controller('HomeController', [function() {
+        .rest('HomeController', [function() {
           //empty
         }])
-        .controller('ProfileController', ['$rootScope', '$routeParams', function($rootScope, $routeParams) {
+        .rest('ProfileController', ['$rootScope', '$routeParams', function($rootScope, $routeParams) {
           var index = parseInt($routeParams.id, 10);
           var record = $rootScope.records[index - 1];
 
@@ -3675,12 +3675,12 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
  * (Note that earlier versions of Angular prior to v1.4 required the promise code to be wrapped using `$scope.$apply(...)`. This is not the case
  * anymore.)
  *
- * In addition to the animation promise, we can also make use of animation-related callbacks within our directives and controller code by registering
+ * In addition to the animation promise, we can also make use of animation-related callbacks within our directives and rest code by registering
  * an event listener using the `$animate` service. Let's say for example that an animation was triggered on our view
- * routing controller to hook into that:
+ * routing rest to hook into that:
  *
  * ```js
- * ngModule.controller('HomePageController', ['$animate', function($animate) {
+ * ngModule.rest('HomePageController', ['$animate', function($animate) {
  *   $animate.on('enter', ngViewElement, function(element) {
  *     // the animation for this route has completed
  *   }]);

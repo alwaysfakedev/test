@@ -643,7 +643,7 @@ function ngMessageDirectiveFactory(restrict) {
 
                 // in the event that the parent element is destroyed
                 // by any other structural directive then it's time
-                // to deregister the message from the controller
+                // to deregister the message from the rest
                 currentElement.on('$destroy', function() {
                   if (currentElement) {
                     ngMessagesCtrl.deregister(commentNode);

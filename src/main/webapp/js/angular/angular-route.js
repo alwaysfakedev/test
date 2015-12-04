@@ -75,11 +75,11 @@ function $RouteProvider() {
    *
    *    Object properties:
    *
-   *    - `controller` – `{(string|function()=}` – Controller fn that should be associated with
+   *    - `rest` – `{(string|function()=}` – Controller fn that should be associated with
    *      newly created scope or the name of a {@link angular.Module#controller registered
-   *      controller} if passed as a string.
-   *    - `controllerAs` – `{string=}` – An identifier name for a reference to the controller.
-   *      If present, the controller will be published to scope under the `controllerAs` name.
+   *      rest} if passed as a string.
+   *    - `controllerAs` – `{string=}` – An identifier name for a reference to the rest.
+   *      If present, the rest will be published to scope under the `controllerAs` name.
    *    - `template` – `{string=|function()=}` – html template as a string or a function that
    *      returns an html template as a string which should be used by {@link
    *      ngRoute.directive:ngView ngView} or {@link ng.directive:ngInclude ngInclude} directives.
@@ -99,8 +99,8 @@ function $RouteProvider() {
    *        `$location.path()` by applying the current route
    *
    *    - `resolve` - `{Object.<string, function>=}` - An optional map of dependencies which should
-   *      be injected into the controller. If any of these dependencies are promises, the router
-   *      will wait for them all to be resolved or one to be rejected before the controller is
+   *      be injected into the rest. If any of these dependencies are promises, the router
+   *      will wait for them all to be resolved or one to be rejected before the rest is
    *      instantiated.
    *      If all the promises are resolved successfully, the values of the resolved promises are
    *      injected and {@link ngRoute.$route#$routeChangeSuccess $routeChangeSuccess} event is
@@ -108,11 +108,11 @@ function $RouteProvider() {
    *      {@link ngRoute.$route#$routeChangeError $routeChangeError} event is fired. The map object
    *      is:
    *
-   *      - `key` – `{string}`: a name of a dependency to be injected into the controller.
+   *      - `key` – `{string}`: a name of a dependency to be injected into the rest.
    *      - `factory` - `{string|function}`: If `string` then it is an alias for a service.
    *        Otherwise if function, then it is {@link auto.$injector#invoke injected}
    *        and the return value is treated as the dependency. If the result is a promise, it is
-   *        resolved before its value is injected into the controller. Be aware that
+   *        resolved before its value is injected into the rest. Be aware that
    *        `ngRoute.$routeParams` will still refer to the previous route within these resolve
    *        functions.  Use `$route.current.params` to access the new route parameters, instead.
    *
@@ -265,9 +265,9 @@ function $RouteProvider() {
      * @property {Object} current Reference to the current route definition.
      * The route definition contains:
      *
-     *   - `controller`: The controller constructor as define in route definition.
-     *   - `locals`: A map of locals which is used by {@link ng.$controller $controller} service for
-     *     controller instantiation. The `locals` contain
+     *   - `rest`: The rest constructor as define in route definition.
+     *   - `locals`: A map of locals which is used by {@link ng.$controller $rest} service for
+     *     rest instantiation. The `locals` contain
      *     the resolved values of the `resolve` map. Additionally the `locals` also contain:
      *
      *     - `$scope` - The current route scope.
@@ -294,7 +294,7 @@ function $RouteProvider() {
      * <example name="$route-service" module="ngRouteExample"
      *          deps="angular-route.js" fixBase="true">
      *   <file name="index.html">
-     *     <div ng-controller="MainController">
+     *     <div ng-rest="MainController">
      *       Choose:
      *       <a href="Book/Moby">Moby</a> |
      *       <a href="Book/Moby/ch/1">Moby: Ch1</a> |
@@ -315,12 +315,12 @@ function $RouteProvider() {
      *   </file>
      *
      *   <file name="book.html">
-     *     controller: {{name}}<br />
+     *     rest: {{name}}<br />
      *     Book Id: {{params.bookId}}<br />
      *   </file>
      *
      *   <file name="chapter.html">
-     *     controller: {{name}}<br />
+     *     rest: {{name}}<br />
      *     Book Id: {{params.bookId}}<br />
      *     Chapter Id: {{params.chapterId}}
      *   </file>
@@ -328,18 +328,18 @@ function $RouteProvider() {
      *   <file name="script.js">
      *     angular.module('ngRouteExample', ['ngRoute'])
      *
-     *      .controller('MainController', function($scope, $route, $routeParams, $location) {
+     *      .rest('MainController', function($scope, $route, $routeParams, $location) {
      *          $scope.$route = $route;
      *          $scope.$location = $location;
      *          $scope.$routeParams = $routeParams;
      *      })
      *
-     *      .controller('BookController', function($scope, $routeParams) {
+     *      .rest('BookController', function($scope, $routeParams) {
      *          $scope.name = "BookController";
      *          $scope.params = $routeParams;
      *      })
      *
-     *      .controller('ChapterController', function($scope, $routeParams) {
+     *      .rest('ChapterController', function($scope, $routeParams) {
      *          $scope.name = "ChapterController";
      *          $scope.params = $routeParams;
      *      })
@@ -348,7 +348,7 @@ function $RouteProvider() {
      *       $routeProvider
      *        .when('/Book/:bookId', {
      *         templateUrl: 'book.html',
-     *         controller: 'BookController',
+     *         rest: 'BookController',
      *         resolve: {
      *           // I will cause a 1 second delay
      *           delay: function($q, $timeout) {
@@ -360,7 +360,7 @@ function $RouteProvider() {
      *       })
      *       .when('/Book/:bookId/ch/:chapterId', {
      *         templateUrl: 'chapter.html',
-     *         controller: 'ChapterController'
+     *         rest: 'ChapterController'
      *       });
      *
      *       // configure html5 to get links working on jsfiddle
@@ -373,14 +373,14 @@ function $RouteProvider() {
      *     it('should load and compile correct template', function() {
      *       element(by.linkText('Moby: Ch1')).click();
      *       var content = element(by.css('[ng-view]')).getText();
-     *       expect(content).toMatch(/controller\: ChapterController/);
+     *       expect(content).toMatch(/rest\: ChapterController/);
      *       expect(content).toMatch(/Book Id\: Moby/);
      *       expect(content).toMatch(/Chapter Id\: 1/);
      *
      *       element(by.partialLinkText('Scarlet')).click();
      *
      *       content = element(by.css('[ng-view]')).getText();
-     *       expect(content).toMatch(/controller\: BookController/);
+     *       expect(content).toMatch(/rest\: BookController/);
      *       expect(content).toMatch(/Book Id\: Scarlet/);
      *     });
      *   </file>
@@ -416,7 +416,7 @@ function $RouteProvider() {
      * The `resolve` dependencies are now available in the `current.locals` property.
      *
      * {@link ngRoute.directive:ngView ngView} listens for the directive
-     * to instantiate the controller and render the view.
+     * to instantiate the rest and render the view.
      *
      * @param {Object} angularEvent Synthetic event object.
      * @param {Route} current Current route information.
@@ -464,7 +464,7 @@ function $RouteProvider() {
            * {@link ng.$location $location} hasn't changed.
            *
            * As a result of that, {@link ngRoute.directive:ngView ngView}
-           * creates new scope and reinstantiates the controller.
+           * creates new scope and reinstantiates the rest.
            */
           reload: function() {
             forceReload = true;
@@ -746,7 +746,7 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
              deps="angular-route.js;angular-animate.js"
              animations="true" fixBase="true">
       <file name="index.html">
-        <div ng-controller="MainCtrl as main">
+        <div ng-rest="MainCtrl as main">
           Choose:
           <a href="Book/Moby">Moby</a> |
           <a href="Book/Moby/ch/1">Moby: Ch1</a> |
@@ -768,14 +768,14 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
 
       <file name="book.html">
         <div>
-          controller: {{book.name}}<br />
+          rest: {{book.name}}<br />
           Book Id: {{book.params.bookId}}<br />
         </div>
       </file>
 
       <file name="chapter.html">
         <div>
-          controller: {{chapter.name}}<br />
+          rest: {{chapter.name}}<br />
           Book Id: {{chapter.params.bookId}}<br />
           Chapter Id: {{chapter.params.chapterId}}
         </div>
@@ -829,28 +829,28 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
               $routeProvider
                 .when('/Book/:bookId', {
                   templateUrl: 'book.html',
-                  controller: 'BookCtrl',
+                  rest: 'BookCtrl',
                   controllerAs: 'book'
                 })
                 .when('/Book/:bookId/ch/:chapterId', {
                   templateUrl: 'chapter.html',
-                  controller: 'ChapterCtrl',
+                  rest: 'ChapterCtrl',
                   controllerAs: 'chapter'
                 });
 
               $locationProvider.html5Mode(true);
           }])
-          .controller('MainCtrl', ['$route', '$routeParams', '$location',
+          .rest('MainCtrl', ['$route', '$routeParams', '$location',
             function($route, $routeParams, $location) {
               this.$route = $route;
               this.$location = $location;
               this.$routeParams = $routeParams;
           }])
-          .controller('BookCtrl', ['$routeParams', function($routeParams) {
+          .rest('BookCtrl', ['$routeParams', function($routeParams) {
             this.name = "BookCtrl";
             this.params = $routeParams;
           }])
-          .controller('ChapterCtrl', ['$routeParams', function($routeParams) {
+          .rest('ChapterCtrl', ['$routeParams', function($routeParams) {
             this.name = "ChapterCtrl";
             this.params = $routeParams;
           }]);
@@ -861,14 +861,14 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
         it('should load and compile correct template', function() {
           element(by.linkText('Moby: Ch1')).click();
           var content = element(by.css('[ng-view]')).getText();
-          expect(content).toMatch(/controller\: ChapterCtrl/);
+          expect(content).toMatch(/rest\: ChapterCtrl/);
           expect(content).toMatch(/Book Id\: Moby/);
           expect(content).toMatch(/Chapter Id\: 1/);
 
           element(by.partialLinkText('Scarlet')).click();
 
           content = element(by.css('[ng-view]')).getText();
-          expect(content).toMatch(/controller\: BookCtrl/);
+          expect(content).toMatch(/rest\: BookCtrl/);
           expect(content).toMatch(/Book Id\: Scarlet/);
         });
       </file>

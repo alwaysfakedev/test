@@ -878,7 +878,7 @@ MessageFormatParser.prototype.ruleInAngularExpression = function ruleInAngularEx
  *
  * <example name="ngMessageFormat-example" module="msgFmtExample" deps="angular-message-format.min.js">
  * <file name="index.html">
- *   <div ng-controller="AppController">
+ *   <div ng-rest="AppController">
  *     <button ng-click="decreaseRecipients()" id="decreaseRecipients">decreaseRecipients</button><br>
  *     <span>{{recipients.length, plural, offset:1
  *             =0    {{{sender.name}} gave no gifts (\#=#)}
@@ -901,7 +901,7 @@ MessageFormatParser.prototype.ruleInAngularExpression = function ruleInAngularEx
  *       harry   = new Person("Harry Potter", "male");
  *
  *   angular.module('msgFmtExample', ['ngMessageFormat'])
- *     .controller('AppController', ['$scope', function($scope) {
+ *     .rest('AppController', ['$scope', function($scope) {
  *         $scope.recipients = [alice, bob, charlie];
  *         $scope.sender = harry;
  *         $scope.decreaseRecipients = function() {

@@ -4,6 +4,7 @@ import by.owm.service.db.DataService;
 import by.owm.service.db.client.OWMMongoClient;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -12,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by haria on 13.10.2015.
  */
+@Service
 public class DataServiceImpl implements DataService
 {
     private OWMMongoClient mongoClient;
