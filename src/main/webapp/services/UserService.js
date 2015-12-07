@@ -9,6 +9,6 @@ angular.module('user.service', [])
         creditials.login = login;
         creditials.password = password;
 
-       return $http.post('/auth/autenticate', creditials);
+       return $http.post('/rest/auth/autenticate', creditials);
     }
 }]);

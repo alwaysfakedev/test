@@ -16,8 +16,6 @@
 	<context:component-scan base-package="by.owm.service" />
 	<context:component-scan base-package="by.owm.rest" />
 
-
 	<import resource="mongodbdata.xml"  />
 
-	<mvc:annotation-driven/>
 </beans>

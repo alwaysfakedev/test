@@ -4,7 +4,6 @@ import com.mongodb.BasicDBObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -19,16 +18,17 @@ import java.util.Map;
  * Created by haria on 17.10.2015.
  */
 
-@Controller
-@RequestMapping("/auth")
+@Component
+@Path("/auth")
 public class AuthController {
 
 //    @Autowired
 //    private DataService dataService;
 
     //TODO:refactor code
-    @RequestMapping(value = "/autenticate", method = RequestMethod.POST)
-    public@ResponseBody String login(@RequestBody String jsonData)
+    @POST
+    @Path("/autenticate")
+    public Response login(String jsonData)
     {
         JSONObject jsonObject = null;
         Response response;
@@ -73,21 +73,6 @@ public class AuthController {
         else {
             response = Response.status(Response.Status.NO_CONTENT).build();
         }
-        return "";
+        return response;
     }
-
-
-    @RequestMapping(value = "/detail", method = RequestMethod.GET)
-    @ResponseBody
-    public Map<String, Object> detail(
-                    HttpSession session) {
-
-
-        // I use a map for the example but you should probably use a "real" object
-        // The idea here is that you return a rest resource
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("project", "project");
-        return map;
-    }
-
 }
