@@ -10,9 +10,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by haria on 13.10.2015.
- */
 @Service
 public class DataServiceImpl implements DataService
 {
