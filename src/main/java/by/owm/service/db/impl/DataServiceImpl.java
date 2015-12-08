@@ -1,7 +1,7 @@
 package by.owm.service.db.impl;
 
 import by.owm.service.db.DataService;
-import by.owm.service.db.client.OWMMongoClient;
+import by.owm.service.db.client.MongoClient;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class DataServiceImpl implements DataService
 {
-    private OWMMongoClient mongoClient;
+    private MongoClient mongoClient;
 
 
     public boolean logIn(String name, String password)
@@ -25,11 +25,11 @@ public class DataServiceImpl implements DataService
         return result;
     }
 
-    public OWMMongoClient getMongoClient() {
+    public MongoClient getMongoClient() {
         return mongoClient;
     }
 
-    public void setMongoClient(OWMMongoClient mongoClient) {
+    public void setMongoClient(MongoClient mongoClient) {
         this.mongoClient = mongoClient;
     }
 

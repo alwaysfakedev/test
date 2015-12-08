@@ -5,7 +5,7 @@
         <property name="location" value="WEB-INF/mail.properties"/>
         <property name="fileEncoding" value="UTF-8"/>
     </bean>
-    <bean id="mongoClient" class="by.owm.service.db.client.OWMMongoClient">
+    <bean id="mongoClient" class="by.owm.service.db.client.MongoClient">
         <property name="host" value="${mongo.host}"/>
         <property name="port" value="${mongo.port}"/>
         <property name="dbName" value="${mongo.db.name}"/>
