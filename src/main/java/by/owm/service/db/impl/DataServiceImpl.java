@@ -4,6 +4,7 @@ import by.owm.service.db.DataService;
 import by.owm.service.db.client.MongoClient;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.WriteResult;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -13,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 @Service
 public class DataServiceImpl implements DataService
 {
+    public static final String USERS = "users";
     private MongoClient mongoClient;
 
 
@@ -20,10 +22,20 @@ public class DataServiceImpl implements DataService
     {
         boolean result = false;
         DBObject credtials = new BasicDBObject("name", name).append("password", md5(password));
-        result = mongoClient.getCollection("users").find(credtials).count() > 0;
+        result = mongoClient.getCollection(USERS).find(credtials).count() > 0;
 
         return result;
     }
+
+    public boolean create(String name, String password)
+    {
+        boolean result = false;
+        DBObject credtials = new BasicDBObject("name", name).append("password", md5(password));
+        result = (mongoClient.getCollection(USERS).insert(credtials) != null);
+
+        return logIn(name,password);
+    }
+
 
     public MongoClient getMongoClient() {
         return mongoClient;

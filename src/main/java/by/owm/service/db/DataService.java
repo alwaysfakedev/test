@@ -9,4 +9,6 @@ import org.springframework.stereotype.Service;
 public interface DataService {
 
     boolean logIn(String name, String password);
+
+    boolean create(String name, String password);
 }

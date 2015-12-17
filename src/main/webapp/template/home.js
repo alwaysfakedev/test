@@ -12,11 +12,19 @@ angular.module('home',['user.service'])
 
     $scope.login = function(user, password)
     {
-        if(user == "1" && password=="1")
+        $scope.status = userService.login(user, password)
+        .then(function(response)
         {
-            userService.login(user, password);
-            $scope.status = "ok";
-        }
-    }
+            $scope.status = response.statusText;
+        });
+    };
 
+    $scope.create = function(user, password)
+    {
+        userService.create_user(user, password)
+        .then(function(response)
+        {
+            $scope.status = response.statusText;
+        });
+    };
 }]);
