@@ -3,8 +3,12 @@
 "http://tuckey.org/res/dtds/urlrewrite2.6.dtd">
 <urlrewrite>
     <rule>
-        <from>^/app/$</from>
+        <from>^/app$</from>
         <to>/index.html</to>
     </rule>
 
+    <rule>
+        <from>^/backend$</from>
+        <to>/backend.html</to>
+    </rule>
 </urlrewrite>
